@@ -14,10 +14,11 @@ namespace ERP.Model.Models
             this.updateDate = DateTime.Now;
         }
 
+        [Key]
         public Guid  Oid { get; set; }
 
         [Timestamp]
-        public int OptimisticLockField { get; set; }
+        public int? OptimisticLockField { get; set; }
 
         public DateTime createDate { get; set; }
 

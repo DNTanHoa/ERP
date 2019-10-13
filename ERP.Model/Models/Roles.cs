@@ -8,6 +8,6 @@ namespace ERP.Model.Models
 
         public bool isActive { get; set; }
         
-        public ICollection<Users> users { get; set; }
+        public IList<Users> users { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ERP.Model.Helpers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,6 +22,6 @@ namespace ERP.Model.Models
 
         public bool isActive { get; set; }
 
-        public ICollection<Roles> roles { get; set; }
+        public IList<Roles> roles { get; }
     }
 }
