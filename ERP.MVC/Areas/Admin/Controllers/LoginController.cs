@@ -29,6 +29,7 @@ namespace ERP.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(LoginModel model)
         {
             UserService service = new UserService(context);
@@ -44,11 +45,11 @@ namespace ERP.MVC.Areas.Admin.Controllers
                 //TODO: Add user's roles to session
 
                 HttpContext.Session.SetObjectAsJson("UserSession", JsonConvert.SerializeObject(userSession));
-                return Redirect("http://google.com");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                ModelState.AddModelError("", "Tên Đăng Nhập Hoặc Mật Khẩu Không Hợp Lên");
+                ModelState.AddModelError("", "Tên Đăng Nhập Hoặc Mật Khẩu Không Hợp Lệ");
             }
             return View("/Views/Login/Login.cshtml");
         }

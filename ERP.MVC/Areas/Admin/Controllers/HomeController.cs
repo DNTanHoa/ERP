@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ERP.MVC.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return View();
+            return View("/Areas/Admin/Views/Home.cshtml");
         }
     }
 }
