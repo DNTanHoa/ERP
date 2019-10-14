@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ERP.Model.Models
 {
@@ -8,6 +9,5 @@ namespace ERP.Model.Models
 
         public bool isActive { get; set; }
         
-        public IList<Users> users { get; }
     }
 }

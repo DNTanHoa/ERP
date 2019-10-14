@@ -22,6 +22,6 @@ namespace ERP.Model.Models
 
         public bool isActive { get; set; }
 
-        public IList<Roles> roles { get; }
+        public virtual ICollection<Roles> roles { get; set; }
     }
 }

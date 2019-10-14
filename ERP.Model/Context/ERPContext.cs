@@ -20,5 +20,9 @@ namespace ERP.Model.Context
 
         public DbSet<Users> users { get; set; }
         public DbSet<Roles> role { get; set; }
+        public DbSet<ProductionOrder> productionOrders { get; set; }
+        public DbSet<Employees> employees { get; set; }
+        public DbSet<ProductionOrderStatus> productionOrdersStatus { get; set; }
+        public DbSet<Customers> customers { get; set; }
     }
 }

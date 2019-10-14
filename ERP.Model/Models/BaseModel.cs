@@ -17,7 +17,7 @@ namespace ERP.Model.Models
         [Key]
         public Guid  Oid { get; set; }
 
-        [Timestamp]
+        [ConcurrencyCheck]
         public int? OptimisticLockField { get; set; }
 
         public DateTime createDate { get; set; }
