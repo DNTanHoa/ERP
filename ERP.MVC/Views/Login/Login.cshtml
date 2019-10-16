@@ -28,11 +28,13 @@
                 @using (Html.BeginForm("Login", "Login",
                     FormMethod.Post, new { @class = "login100-form validate-form" }))
                 {
+                    @Html.AntiForgeryToken()
+                    
                 <div class="fields">
                     <span class="login100-form-title p-b-43">
                         Đăng Nhập
                     </span>
-
+                    @Html.ValidationSummary(true, null, new { @class="alert alert-danger" })
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                         @Html.TextBoxFor(model => model.username, new { @class = "input100", @type = "text" })
                         @*<input class="input100" type="text" name="username">*@
@@ -49,7 +51,7 @@
 
                     <div class="flex-sb-m w-full p-t-3 p-b-32">
                         <div class="contact100-form-checkbox">
-                            @Html.CheckBoxFor(model => model.rememberMe, new { @class="input-checkbox100" })
+                            @Html.CheckBoxFor(model => model.rememberMe, new { @class = "input-checkbox100" })
                             @*<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">*@
                             <label class="label-checkbox100" for="ckb1">
                                 Nhớ Mật Khẩu
@@ -89,5 +91,10 @@
     <script src="/assets/vendor/daterangepicker/daterangepicker.js"></script>
     <script src="/assets/vendor/countdowntime/countdowntime.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script>
+        var input = $('.validate-input .input100');
+        if (input.val().trim() != "")
+            input.addClass('has-val');
+    </script>
 </body>
 </html>
