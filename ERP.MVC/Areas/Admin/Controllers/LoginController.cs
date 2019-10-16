@@ -10,6 +10,9 @@ using ERP.MVC.Areas.Admin.Models;
 using ERP.MVC.Commons;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ERP.MVC.Areas.Admin.Controllers
 {
@@ -30,7 +33,8 @@ namespace ERP.MVC.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginModel model)
+        [AllowAnonymous]
+        public IActionResult Login(LoginModel model, string requestPath)
         {
             UserService service = new UserService(context);
             bool loginResult = service.Login(model.username, model.password);
@@ -43,6 +47,28 @@ namespace ERP.MVC.Areas.Admin.Controllers
                 userSession.userName = user.username;
                 userSession.userOid = user.Oid;
                 //TODO: Add user's roles to session
+                
+                // create claims
+                List<Claim> claims = new List<Claim>
+                {
+                     new Claim(ClaimTypes.Name, "Cookie authentication"),
+                     new Claim(ClaimTypes.Email, model.username)
+                };
+
+                // create identity
+                ClaimsIdentity identity = new ClaimsIdentity(claims, "cookie");
+
+                // create principal
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                HttpContext.SignInAsync
+                (
+                    scheme: "DemoSecurityScheme",
+                    principal: principal,
+                    properties: new AuthenticationProperties
+                    {
+                       
+                    }
+                );
 
                 HttpContext.Session.SetObjectAsJson("UserSession", JsonConvert.SerializeObject(userSession));
                 return RedirectToAction("Index", "Home");
