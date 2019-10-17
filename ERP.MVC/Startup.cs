@@ -35,16 +35,7 @@ namespace ERP.MVC
             services.AddAuthentication("DemoSecurityScheme")
             .AddCookie("DemoSecurityScheme", options =>
             {
-                options.AccessDeniedPath = new PathString("/Account/Access");
-                options.Cookie = new CookieBuilder
-                {
-                    //Domain = "",
-                    HttpOnly = true,
-                    Name = ".aspNetCoreDemo.Security.Cookie",
-                    Path = "/",
-                    SameSite = SameSiteMode.Lax,
-                    SecurePolicy = CookieSecurePolicy.SameAsRequest
-                };
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                 options.LoginPath = new PathString("/admin");
                 options.SlidingExpiration = true;
             });
@@ -53,7 +44,6 @@ namespace ERP.MVC
 
             services.AddDistributedMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSession();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -68,11 +58,10 @@ namespace ERP.MVC
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseSession();
-            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
